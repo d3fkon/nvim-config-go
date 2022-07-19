@@ -27,6 +27,32 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
+-- Show diagnostic popup
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = "rounded",
+      source = "always",
+      prefix = " ",
+      scope = "cursor",
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end,
+})
+
+-- Always show the source during diagnosics
+vim.diagnostic.config({
+  update_in_insert = true,
+  virtual_text = {
+    source = "always", -- Or "if_many"
+  },
+  float = {
+    source = "always", -- Or "if_many"
+  },
+})
+
 local servers = {
   "bashls",
   "dockerls",
@@ -37,6 +63,7 @@ local servers = {
   "texlab",
   "tsserver",
   "yamlls",
+  "rust_analyzer",
 }
 -- Use a loop to conveniently call 'setup' on multiple servers
 for _, lsp in ipairs(servers) do
@@ -54,11 +81,6 @@ for _, lsp in ipairs(servers) do
       json = {
         format = { enabled = false },
         schemas = {
-          {
-            description = "ESLint config",
-            fileMatch = { ".eslintrc.json", ".eslintrc" },
-            url = "http://json.schemastore.org/eslintrc",
-          },
           {
             description = "Package config",
             fileMatch = { "package.json" },

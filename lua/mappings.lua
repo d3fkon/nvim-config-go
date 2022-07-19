@@ -38,21 +38,86 @@ map("i", "<c-f>", "<c-g>u<Esc>[s1z=`]a<c-g>u", default_options)
 map("x", "K", ":move '<-2<CR>gv-gv", default_options)
 map("x", "J", ":move '>+1<CR>gv-gv", default_options)
 
+-- LSP Mappings
+map("n", "gD", function()
+	vim.lsp.buf.declaration()
+end)
+
+map("n", "gd", function()
+	vim.lsp.buf.definition()
+end)
+
+map("n", "K", function()
+	vim.lsp.buf.hover()
+end)
+
+map("n", "gi", function()
+	vim.lsp.buf.implementation()
+end)
+
+map("n", "<C-k>", function()
+	vim.lsp.buf.signature_help()
+end)
+
+map("n", "<leader>D", function()
+	vim.lsp.buf.type_definition()
+end)
+
+map("n", "mm", function()
+	vim.lsp.buf.rename()
+end)
+
+map("n", "<leader>ca", function()
+	vim.lsp.buf.code_action()
+end)
+
+map("n", "gr", function()
+	vim.lsp.buf.references()
+end)
+
+map("n", "[d", function()
+	vim.diagnostic.goto_prev()
+end)
+
+map("n", "d]", function()
+	vim.diagnostic.goto_next()
+end)
+
+map("n", "<leader>q", function()
+	vim.diagnostic.setloclist()
+end)
+
+map("n", "<leader>fm", function()
+	vim.lsp.buf.formatting()
+end)
+
+map("n", "<leader>wa", function()
+	vim.lsp.buf.add_workspace_folder()
+end)
+
+map("n", "<leader>wr", function()
+	vim.lsp.buf.remove_workspace_folder()
+end)
+
+map("n", "<leader>fw", "<cmd> :Telescope live_grep <CR>")
 -- starlite mappings
 map("n", "*", function()
-  return require("starlite").star()
+	return require("starlite").star()
 end, default_options)
 map("n", "g*", function()
-  return require("starlite").g_star()
+	return require("starlite").g_star()
 end, default_options)
 map("n", "#", function()
-  return require("starlite").hash()
+	return require("starlite").hash()
 end, default_options)
 map("n", "g#", function()
-  return require("starlite").g_hash()
+	return require("starlite").g_hash()
 end, default_options)
 
 -- move over a closing element in insert mode
 map("i", "<C-l>", function()
-  return require("functions").escapePair()
+	return require("functions").escapePair()
 end, default_options)
+
+-- Nvim tree
+map("n", "<leader>-", "<cmd> :NvimTreeToggle <CR>")
